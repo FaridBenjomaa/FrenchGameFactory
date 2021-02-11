@@ -540,6 +540,7 @@ func game() {
             menuAttackJ1()
         }
     }
+    print("Test gitHub")
   
     }
 
