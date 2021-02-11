@@ -12,5 +12,5 @@ class Character {
     var name : String?
     var lifePoint : Int = 100
     var weapon = Weapon()
-    var state = "life"
+    var isALive : Bool = true
 }
