@@ -9,6 +9,7 @@ import Foundation
 
 class Weapon{
     
+    var nameEn : String = ""
     var name : String = ""
     var attackPoint : Int = 0
     var protectPoint : Int = 0
