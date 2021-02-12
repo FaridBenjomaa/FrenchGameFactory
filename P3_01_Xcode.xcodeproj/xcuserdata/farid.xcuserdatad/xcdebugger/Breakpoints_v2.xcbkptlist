@@ -14,9 +14,9 @@
             filePath = "P3_01_Xcode/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "456"
-            endingLineNumber = "456"
-            landmarkName = "game()"
+            startingLineNumber = "490"
+            endingLineNumber = "490"
+            landmarkName = "gamefr()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -30,8 +30,8 @@
             filePath = "P3_01_Xcode/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "558"
-            endingLineNumber = "558"
+            startingLineNumber = "597"
+            endingLineNumber = "597"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -46,9 +46,9 @@
             filePath = "P3_01_Xcode/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "505"
-            endingLineNumber = "505"
-            landmarkName = "game()"
+            startingLineNumber = "539"
+            endingLineNumber = "539"
+            landmarkName = "gamefr()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

@@ -50,39 +50,59 @@ hand.name = "Main"
 hand.attackPoint = 5
 
 var tour = 0
+var i = 1
+var langue : String?
+var gameIsOn = true
+
 /* ************************************************************************
                                 Fonction
  ************************************************************************** */
+
+func choiceLanguage(){
+    print("\nQuel langue voulez vous utiliser pour jouer ?")
+    print("What language do you want to use to play?")
+    print("1.  Francais - French ")
+    print("2.  English -- Anglais")
+    langue = readLine()
+}
 func victoire(){
-    team1 = Team()
-    team1.teamName = "Equipe 1"
-    
-    team2 = Team()
-    team1.teamName = "Equipe 2"
-    
-    player1Chara1 = Character()
-    player1Chara2 = Character()
-    player1Chara3 = Character()
-    
-    player2Chara1 = Character()
-    player2Chara2 = Character()
-    player2Chara3 = Character()
-    
-    tour = 0
+    i = 1
     
     print(" voulez vous faire une nouvelle partie ?  : yes -- no")
     if let choice = readLine(){
         switch choice {
             case "YES", "yes":
-                game()
+                team1 = Team()
+                team1.teamName = "Equipe 1"
+                
+                team2 = Team()
+                team1.teamName = "Equipe 2"
+                
+                player1Chara1 = Character()
+                player1Chara2 = Character()
+                player1Chara3 = Character()
+                
+                player2Chara1 = Character()
+                player2Chara2 = Character()
+                player2Chara3 = Character()
+                
+                tour = 0
+               
+                gamefr()
             case "NO", "no":
-                print("Merci d'avoir jouer")
-                break
+                gameIsOn = false
+                team1.teamPoint = 0
+                team2.teamPoint = 0
+                gameOver()
             default:
-                print("Merci d'avoir jouer")
-                break
+                gameIsOn = false
+                team1.teamPoint = 0
+                team2.teamPoint = 0
+                gameOver()
+              
         }
     }
+ 
 }
 
 func teamChoice(character1: Character, character2: Character, character3: Character, team: Team){
@@ -117,24 +137,37 @@ func armeRandom(character: Character){
 
 
 func menuPersonage(character: Character) {
-    print("\nQuels est le nom de votre personnage : ")
+    
+    var numero = ""
+    if i == 1
+    {
+        numero = String(i) + " er"
+    }else{
+        numero = String(i) + " eme"
+    }
+    
+    print("\nQuels est le nom de votre \(numero) personnage : ")
     if let choice = readLine(){
         character.name = choice.capitalized
     
     }
+    i += 1
 }
 
 func armeChoise(character: Character){
    
+    var arme : String?
+    
     func choice(){
         print("\nQuel arme voulez vous ?"
                 + "\n1.  Une ache"
                 + "\n2.  Une epée"
                 + "\n3.  Un bouclier"
                 + "\n4. main nue")
+        arme = readLine()
     }
     choice()
-    if let arme = readLine() {
+    if  arme != nil {
         switch arme {
             case "1": // Ajouter une nouvelle activité
                 character.weapon = axe
@@ -448,7 +481,122 @@ func menuAttack (c1P1:Character, c2P1: Character, c3P1: Character, c1P2:Characte
 }
 
 
-func game() {
+func gamefr() {
+    print("\n******************* Regle du Jeu ******************"
+        +   "\nVous devez choisir 3 personnages et leur donner un nom"
+            + "\nchaque nom doit etre unique, pour chaque personnage"
+            + "\nvous devez lui attribuer une arme ")
+    
+    print("\n******************"
+            + "Le Joeur 1 Choisis "
+            + "******************")
+    
+    menuPersonage(character: player1Chara1)
+    armeChoise(character: player1Chara1)
+    menuPersonage(character: player1Chara2)
+    while player1Chara1.name == player1Chara2.name {
+        ChagerdeNom(character: player1Chara2)
+    }
+    armeChoise(character: player1Chara2)
+    menuPersonage(character: player1Chara3)
+    while (player1Chara1.name == player1Chara3.name) || (player1Chara2.name == player1Chara3.name)  {
+        ChagerdeNom(character: player1Chara3)
+    }
+    armeChoise(character: player1Chara3)
+    teamChoice(character1: player1Chara1, character2: player1Chara2, character3: player1Chara3, team: team1)
+    
+    print("\n******************"
+        + "Le Joeur 2 Choisis "
+        + "******************")
+    i = 1
+    menuPersonage(character: player2Chara1)
+    while (player2Chara1.name == player1Chara1.name) || (player2Chara1.name == player1Chara2.name) || (player2Chara1.name == player1Chara3.name)  {
+        ChagerdeNom(character: player2Chara1)
+    }
+    armeChoise(character: player2Chara1)
+    menuPersonage(character: player2Chara2)
+    while (player2Chara1.name == player2Chara2.name) || (player2Chara2.name == player1Chara1.name) || (player2Chara2.name == player1Chara2.name) || (player2Chara2.name == player1Chara3.name) {
+        ChagerdeNom(character: player2Chara2)
+    }
+    armeChoise(character: player2Chara2)
+    menuPersonage(character: player2Chara3)
+    while (player2Chara1.name == player2Chara3.name) || (player2Chara2.name == player2Chara3.name) || (player2Chara3.name == player1Chara1.name) || (player2Chara3.name == player1Chara2.name) || (player2Chara3.name == player1Chara3.name) {
+        ChagerdeNom(character: player2Chara3)
+    }
+    armeChoise(character: player2Chara3)
+    teamChoice(character1: player2Chara1, character2: player2Chara2, character3: player2Chara3, team: team2)
+    
+    print   ("\n******************"
+            + " La partie peu commencer "
+            + "******************"
+            + "\n")
+    
+    let numberP1 = Int.random(in: 0..<10)
+    let numberP2 = Int.random(in: 0..<10)
+    
+    if numberP1 > numberP2 {
+        
+        while team1.teamPoint != 0 || team2.teamPoint != 0 {
+            if team1.teamPoint == 0 {
+                print("\nL'equipe 2 a Gagné")
+                print("Team 2 : \(team2.teamPoint) point et  Team 1 : \(team1.teamPoint)  point en \(tour) tours ")
+                victoire()
+                break
+            }else{
+            print("\nLe Joueur 1 commence : ")
+            menuAttack(c1P1: player1Chara1, c2P1: player1Chara2, c3P1: player1Chara3, c1P2: player2Chara1, c2P2: player2Chara2, c3P2: player2Chara3)
+                tour += 1
+            }
+            print("Team 1 : \(team1.teamPoint) Team 2 : \(team2.teamPoint) ")
+            
+            if team2.teamPoint == 0 {
+                print("\nL'equipe 1 a Gagné")
+                print("Team 1 : \(team1.teamPoint) point et Team 2 : \(team2.teamPoint) point en \(tour) tours")
+                victoire()
+                break
+            }else{
+                print("\nLe Joueur 2  joue : ")
+                menuAttack(c1P1: player2Chara1, c2P1: player2Chara2, c3P1: player2Chara3, c1P2: player1Chara1, c2P2: player1Chara2, c3P2: player1Chara3)
+                tour += 1
+            }
+            
+            
+            
+        }
+        
+    }else{
+        
+        while team1.teamPoint != 0 || team2.teamPoint != 0 {
+            if team2.teamPoint == 0 {
+                print("\nL'equipe 1 a Gagné")
+                print("Team 1 : \(team1.teamPoint) point et Team 2 : \(team2.teamPoint) point en \(tour) tours")
+                victoire()
+                break
+            }else{
+                print("\nLe Joueur 2  joue : ")
+                menuAttack(c1P1: player2Chara1, c2P1: player2Chara2, c3P1: player2Chara3, c1P2: player1Chara1, c2P2: player1Chara2, c3P2: player1Chara3)
+                tour += 1
+            }
+            
+            
+            
+            if team1.teamPoint == 0 {
+                print("\nL'equipe 2 a Gagné")
+                print("Team 2 : \(team2.teamPoint) point et  Team 1 : \(team1.teamPoint)  point en \(tour) tours")
+                victoire()
+                break
+            }else{
+                print("\nLe Joueur 1 commence : ")
+                menuAttack(c1P1: player1Chara1, c2P1: player1Chara2, c3P1: player1Chara3, c1P2: player2Chara1, c2P2: player2Chara2, c3P2: player2Chara3)
+                tour += 1
+            }
+            
+        }
+    }
+   
+}
+ 
+func gameEn() {
     print("Vous avez le droit de choisir 3 personnage"
             + " vous devez leur donner un nom unique chaqu'un"
             + " et luis choisir une arme")
@@ -472,8 +620,8 @@ func game() {
     teamChoice(character1: player1Chara1, character2: player1Chara2, character3: player1Chara3, team: team1)
     
     print("\n******************"
-        + "\nLe Joeur 2 Choisis"
-        + "\n******************")
+            + "\nLe Joeur 2 Choisis"
+            + "\n******************")
     
     menuPersonage(character: player2Chara1)
     while (player2Chara1.name == player1Chara1.name) || (player2Chara1.name == player1Chara2.name) || (player2Chara1.name == player1Chara3.name)  {
@@ -493,9 +641,9 @@ func game() {
     teamChoice(character1: player2Chara1, character2: player2Chara2, character3: player2Chara3, team: team2)
     
     print   ("\n******************"
-            + "\n La partie peu commencer"
-            + "\n******************"
-            + "\n")
+                + "\n La partie peu commencer"
+                + "\n******************"
+                + "\n")
     
     let numberP1 = Int.random(in: 0..<10)
     let numberP2 = Int.random(in: 0..<10)
@@ -508,8 +656,8 @@ func game() {
                 print("Team 2 : \(team2.teamPoint) point et  Team 1 : \(team1.teamPoint)  point en \(tour) tours ")
                 victoire()
             }else{
-            print("\nLe Joueur 1 commence : ")
-            menuAttack(c1P1: player1Chara1, c2P1: player1Chara2, c3P1: player1Chara3, c1P2: player2Chara1, c2P2: player2Chara2, c3P2: player2Chara3)
+                print("\nLe Joueur 1 commence : ")
+                menuAttack(c1P1: player1Chara1, c2P1: player1Chara2, c3P1: player1Chara3, c1P2: player2Chara1, c2P2: player2Chara2, c3P2: player2Chara3)
                 tour += 1
             }
             print("Team 1 : \(team1.teamPoint) Team 2 : \(team2.teamPoint) ")
@@ -524,7 +672,7 @@ func game() {
                 tour += 1
             }
             
-            print("\nTeam 1 : \(team1.teamPoint) Team 2 : \(team2.teamPoint) ")
+            
             
         }
         
@@ -556,8 +704,42 @@ func game() {
         }
     }
 }
- 
+
+
+
+
+func game(){
+    if gameIsOn == true{
+        choiceLanguage()
+        
+        if langue != "1" || langue != "2"{
+            switch langue{
+                case "1":
+                    gamefr()
+                case "2":
+                    gameEn()
+                default:
+                    print("Merci de selctionner parmis les 2 propositions")
+                    print("Please select between the 2 proposals")
+                    choiceLanguage()
+            }
+            
+        }
+    }else{
+        gameOver()
+    }
+    
+   
+
+}
+
+func gameOver(){
+    print("Merci d'avoir jouer")
+}
 
 game()
+
+
     
+
 
