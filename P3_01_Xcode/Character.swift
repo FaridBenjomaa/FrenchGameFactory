@@ -13,4 +13,5 @@ class Character {
     var lifePoint : Int = 100
     var weapon = Weapon()
     var isALive : Bool = true
+    var team = Team()
 }
