@@ -16,12 +16,19 @@ var player1Chara1 = Character()
 var player1Chara2 = Character()
 var player1Chara3 = Character()
 
-
-
 // personnages Joueur 2
 var player2Chara1 = Character()
 var player2Chara2 = Character()
 var player2Chara3 = Character()
+
+// Personnage controller par l'ordianteur
+var ordiChara1 = Character()
+var ordiChara2 = Character()
+var ordiChara3 = Character()
+
+ordiChara1.name = "Chevalier Ecko"
+ordiChara2.name = "Boris le Chasseur"
+ordiChara3.name = "Mickael Chipster"
 
 // Equipe
 var team1 = Team()
@@ -57,10 +64,56 @@ var tour = 0 //pour compter le nombre de tour
 var i = 1
 var langue : String? // pour le choix de la langue
 var gameIsOn = true
+var gameSolo = true
 
 /* ************************************************************************
                                 Fonction
  ************************************************************************** */
+
+func nbjoueurFr(){
+    var nbjoueur : String?
+    
+    print("Combien de jouer")
+    print("1 - 1 jouer")
+    print("2 - 2 joueur")
+    nbjoueur = readLine()
+    
+    if nbjoueur != nil {
+        switch nbjoueur {
+            case "1":
+                gameSolo = true
+                gameSoloFr()
+            case "2":
+                gameSolo = false
+                gamefr()
+            default:
+                print("Merci de Choisir entre 1 ou 2 ")
+                nbjoueurFr()
+        }
+    }
+}
+func nbjoueurEn(){
+    var nbjoueur : String?
+    
+    print("how many players")
+    print("1 - 1 Player")
+    print("2 - 2 Players")
+    nbjoueur = readLine()
+    
+    if nbjoueur != nil {
+        switch nbjoueur {
+            case "1":
+                gameSolo = true
+                gameSoloEn()
+            case "2":
+                gameSolo = false
+                gameEn()
+            default:
+                print("Please Choose between 1 or 2")
+                nbjoueurFr()
+        }
+    }
+}
 
 // Text du choix de langue
 func choiceLanguage(){
@@ -94,9 +147,17 @@ func victoireFr(){
                 player2Chara2 = Character()
                 player2Chara3 = Character()
                 
+                
+                ordiChara1 = Character()
+                ordiChara2 = Character()
+                ordiChara3 = Character()
+                ordiChara1.name = "Chevalier Ecko"
+                ordiChara2.name = "Boris le Chasseur"
+                ordiChara3.name = "Mickael Chipster"
+                
                 tour = 0
                
-                gamefr()
+                nbjoueurFr()
             case "No":
                 gameIsOn = false
                 gameOver()
@@ -177,7 +238,6 @@ func armeRandomFr(character: Character){
             character.weapon = axe
     }
 }
-
 func armeRandomEn(character: Character){
     let numalea = Int.random(in: 1..<5)
     
@@ -199,6 +259,7 @@ func armeRandomEn(character: Character){
             character.weapon = axe
     }
 }
+
 //Phrase du choix des noms des personnages
 func menuPersonageFr(character: Character) {
     
@@ -218,7 +279,6 @@ func menuPersonageFr(character: Character) {
     }
     i += 1
 }
-
 func menuPersonageEn(character: Character) {
     
     // permet de changer de 1 er 2eme et 3eme en fonction de l'ordre
@@ -240,8 +300,41 @@ func menuPersonageEn(character: Character) {
     i += 1
 }
 
+func menuOrdinateur(character: Character) {
+    
+    // permet de changer de 1 er 2eme et 3eme en fonction de l'ordre
+    var numero = ""
+    if i == 1
+    {
+        numero = String(i) + " er"
+    }else{
+        numero = String(i) + " eme"
+    }
+    
+    print("\n le \(numero) personnage  de l'ordi est \(character): ")
+    
+    i += 1
+}
+func menuOrdinateurEn(character: Character) {
+    
+    // permet de changer de 1 er 2eme et 3eme en fonction de l'ordre
+    var numero = ""
+    if i == 1
+    {
+        numero = String(i) + "st"
+    }else if i == 2{
+        numero = String(i) + "nd"
+    }else{
+        numero = String(i) + "rd"
+    }
+    
+    print("\nWhat is the name of your  \(numero) character : ")
+    
+    i += 1
+}
+
 //choix des armes des personnages
-func armeChoiseFr(character: Character){
+func armeChoiceFr(character: Character){
    
     var arme : String?
     
@@ -275,8 +368,7 @@ func armeChoiseFr(character: Character){
         
     }
 }
-
-func armeChoiseEn(character: Character){
+func armeChoiceEn(character: Character){
     
     var arme : String?
     
@@ -296,13 +388,13 @@ func armeChoiseEn(character: Character){
                 print("\(character.name!) has a  \(character.weapon.name)")
             case "2": // Consulter la banque
                 character.weapon = sword
-                print("\(character.name!) has a  \(character.weapon.name)")
+                print("\(character.name!) has a  \(character.weapon.nameEn)")
             case "3": // Consulter la grange
                 character.weapon = shield
-                print("\(character.name!) has a \(character.weapon.name)")
+                print("\(character.name!) has a \(character.weapon.nameEn)")
             case "4" :
                 character.weapon = hand
-                print("\(character.name!) has a  \(character.weapon.name)")
+                print("\(character.name!) has a  \(character.weapon.nameEn)")
             default:
                 print("Please make a choice between 1 and 4")
                 choice()
@@ -310,6 +402,76 @@ func armeChoiseEn(character: Character){
         
     }
 }
+
+func armeChoiceFrAlea(character: Character){
+    
+    let arme = Int.random(in: 0..<5)
+    
+    func choice(){
+        print("\nQuel arme voulez vous ?"
+                + "\n1.  Une ache"
+                + "\n2.  Une epée"
+                + "\n3.  Un bouclier"
+                + "\n4. main nue")
+       
+    }
+    choice()
+   
+        switch arme {
+            case 1: // Ajouter une nouvelle activité
+                character.weapon = axe
+                print("\(character.name!) posede une \(character.weapon.name)")
+            case 2: // Consulter la banque
+                character.weapon = sword
+                print("\(character.name!) posede une \(character.weapon.name)")
+            case 3: // Consulter la grange
+                character.weapon = shield
+                print("\(character.name!) posede un \(character.weapon.name)")
+            case 4 :
+                character.weapon = hand
+                print("\(character.name!) posede un \(character.weapon.name)")
+            default:
+                print("Merci de faire un choix entre 1 et 4")
+                choice()
+        }
+        
+    
+}
+func armeChoiceEnAlea(character: Character){
+    
+    let arme = Int.random(in: 0..<5)
+    
+    func choice(){
+        print("\nWitch weapon do you want ?"
+                + "\n1.  Axe"
+                + "\n2.  Sword"
+                + "\n3.  Shield"
+                + "\n4.  Hand")
+        
+    }
+    choice()
+    
+    switch arme {
+        case 1: // Ajouter une nouvelle activité
+            character.weapon = axe
+            print("\(character.name!) has a  \(character.weapon.name)")
+        case 2: // Consulter la banque
+            character.weapon = sword
+            print("\(character.name!) has a  \(character.weapon.name)")
+        case 3: // Consulter la grange
+            character.weapon = shield
+            print("\(character.name!) has a \(character.weapon.name)")
+        case 4:
+            character.weapon = hand
+            print("\(character.name!) has a  \(character.weapon.name)")
+        default:
+            print("Please make a choice between 1 and 4")
+            choice()
+    }
+    
+    
+}
+
 //Changer de nom si le nom existe deja
 func ChagerdeNomFr(character: Character) {
     print("\nCe nom existe deja merci d'en choisir un autre : ")
@@ -317,7 +479,6 @@ func ChagerdeNomFr(character: Character) {
         character.name = choice.capitalized
     }
 }
-
 func ChagerdeNomEn(character: Character) {
     print("\nThis name already exists please choose another one : ")
     if let choice = readLine(){
@@ -336,6 +497,7 @@ func combatFr(character : Character, character2: Character){
     if character2.team.teamPoint <= 0 {
         character2.team.teamPoint = 0
     }
+   
     print("\n\(character.name!) attaque \(character2.name!) "
         + "\n \(character2.name!) perd \(character.weapon.attackPoint) point de vie"
     + "\n il reste \(character2.lifePoint) point de vie à \(character2.name!)")
@@ -344,7 +506,6 @@ func combatFr(character : Character, character2: Character){
         
     }
 }
-
 func combatEn(character : Character, character2: Character){
     character2.lifePoint -= character.weapon.attackPoint
     character2.team.teamPoint -= character.weapon.attackPoint
@@ -363,6 +524,7 @@ func combatEn(character : Character, character2: Character){
         
     }
 }
+
 // choix de qui attaque qui
 func menuAttackFr(c1P1:Character, c2P1: Character, c3P1: Character, c1P2:Character, c2P2: Character, c3P2: Character) {
     
@@ -464,20 +626,39 @@ func menuAttackFr(c1P1:Character, c2P1: Character, c3P1: Character, c1P2:Charact
     func choiceAttack(){
         print("\n Quel personnage voulez vous attaquer ?")
         if c1P2.isALive == false {
-            print("1.  \(c1P2.name!) (KO)")//affiche KO lors celui-ci n'a plus de point de vie
+        
+                print("1.  \(c1P2.name!) (KO)")//
+            
+            //affiche KO lors celui-ci n'a plus de point de vie
         }else{
-            print("1.  \(c1P2.name!)(\(c1P2.lifePoint) PV)")
+        
+                print("1.  \(c1P2.name!)(\(c1P2.lifePoint) PV)")
+            
         }
         if c2P2.isALive == false {
-            print("2.  \(c2P2.name!) (KO)")//affiche KO lors celui-ci n'a plus de point de vie
+          
+                print("1.  \(c2P2.name!) (KO)")//
+            
+            //affiche KO lors celui-ci n'a plus de point de vie
         }else{
-            print("2.  \(c2P2.name!) (\(c2P2.lifePoint) PV)")
+          
+           
+         
+                print("1.  \(c2P2.name!)(\(c2P2.lifePoint) PV)")
+            
         }
         if c3P2.isALive == false {
-            print("3.  \(c3P2.name!) (KO)")//affiche KO lors celui-ci n'a plus de point de vie
+          
+                print("1.  \(c3P2.name!) (KO)")//
+            
+            //affiche KO lors celui-ci n'a plus de point de vie
         }else{
-            print("3.  \(c3P2.name!) ( \(c3P2.lifePoint) PV) ")
+        
+          
+                print("1.  \(c3P2.name!)(\(c3P2.lifePoint) PV)")
+            
         }
+    
         perso = readLine()
     }
     
@@ -646,7 +827,6 @@ func menuAttackFr(c1P1:Character, c2P1: Character, c3P1: Character, c1P2:Charact
     }
     
 }
-
 func menuAttackEn(c1P1:Character, c2P1: Character, c3P1: Character, c1P2:Character, c2P2: Character, c3P2: Character) {
     
     var p1 : Int = 0
@@ -930,6 +1110,480 @@ func menuAttackEn(c1P1:Character, c2P1: Character, c3P1: Character, c1P2:Charact
     
 }
 
+func menuAttackOrdi(c1P1:Character, c2P1: Character, c3P1: Character, c1P2:Character, c2P2: Character, c3P2: Character) {
+    
+    var p1 : Int = 0
+    var p2 : Int = 0
+    var nombreDeMort = 0
+    var nombreDeMortOrdi = 0
+    var numberOrdi = Int.random(in: 1..<4)
+    
+    // choix du personnage qui attaque
+    func choice(){
+        print("\nQuel personnage voulez vous choisir ?:")
+        if c1P1.isALive == false {
+            print("1.  \(c1P1.name!) (KO)")
+            nombreDeMort += 1
+        }else{
+            print("1.  \(c1P1.name!) (\(c1P1.lifePoint) PV) ")
+        }
+        if c2P1.isALive == false {
+            print("2.  \(c2P1.name!) (KO)")
+            nombreDeMort += 2
+        }else{
+            print("2.  \(c2P1.name!) ( \(c2P1.lifePoint) PV) ")
+        }
+        if c3P1.isALive == false {
+            print("3.  \(c3P1.name!) (KO)")
+            nombreDeMort += 3
+        }else{
+            print("3.  \(c3P1.name!) (\(c3P1.lifePoint) PV)")
+        }
+       
+    }
+    
+    choice()
+
+    //choix si aucun joueur n'est KO
+  
+    switch nombreDeMort {
+        case 1:
+            numberOrdi = Int.random(in: 2..<4)
+            switch numberOrdi {
+                case 2:
+                    p1 = 2
+                case 3:
+                    p1 = 3
+                default:
+                    p1 = 2
+            }
+        case 2:
+            numberOrdi = Int.random(in: 2..<4)
+            switch numberOrdi {
+                case 2:
+                    p1 = 1
+                case 3:
+                    p1 = 3
+                default:
+                    p1 = 1
+            }
+        case 3:
+            p1 = 3
+        case 4:
+            p1 = 2
+        case 5:
+            p1 = 1
+        default:
+            numberOrdi = Int.random(in: 1..<4)
+            switch numberOrdi {
+                case 1:
+                    p1 = 1
+                case 2:
+                    p1 = 2
+                case 3:
+                    p1 = 3
+                default:
+                    p1 = 1
+            }
+    }
+    
+    
+    // choix du personnage qui sera attaquer
+    func choiceAttack(){
+        print("\n Quel personnage voulez vous attaquer ?")
+        if c1P2.isALive == false {
+            print("1.  \(c1P2.name!) (KO)")//affiche KO lors celui-ci n'a plus de point de vie
+            nombreDeMortOrdi += 1
+        }else{
+            print("1.  \(c1P2.name!)(\(c1P2.lifePoint) PV)")
+        }
+        if c2P2.isALive == false {
+            print("2.  \(c2P2.name!) (KO)")//affiche KO lors celui-ci n'a plus de point de vie
+            nombreDeMortOrdi += 2
+        }else{
+            print("2.  \(c2P2.name!) (\(c2P2.lifePoint) PV)")
+        }
+        if c3P2.isALive == false {
+            print("3.  \(c3P2.name!) (KO)")//affiche KO lors celui-ci n'a plus de point de vie
+            nombreDeMortOrdi += 3
+        }else{
+            print("3.  \(c3P2.name!) ( \(c3P2.lifePoint) PV) ")
+        }
+        
+    }
+    
+    choiceAttack()
+    
+    numberOrdi = Int.random(in: 1..<4)
+    
+    switch nombreDeMortOrdi {
+        case 1:
+            numberOrdi = Int.random(in: 2..<4)
+            switch numberOrdi {
+                case 2:
+                    p2 = 5
+                case 3:
+                    p2 = 6
+                default:
+                    p2 = 5
+            }
+        case 2:
+            numberOrdi = Int.random(in: 2..<4)
+            switch numberOrdi {
+                case 2:
+                    p2 = 4
+                case 3:
+                    p2 = 6
+                default:
+                    p2 = 4
+            }
+        case 3:
+            p2 = 6
+        case 4:
+            p2 = 5
+        case 5:
+            p2 = 4
+        default:
+            numberOrdi = Int.random(in: 1..<4)
+            switch numberOrdi {
+                case 1:
+                    p2 = 4
+                case 2:
+                    p2 = 5
+                case 3:
+                    p2 = 6
+                default:
+                    p2 = 4
+            }
+            
+    }
+    
+    
+    
+    // jette les dé enter 1 est 10
+    let coffre = Int.random(in: 1..<10)
+    
+    //si le joueur 1 choisi son 1er personnage et choisis d'attaquer le 1er personnage du joueur 2
+    if p1 == 1 && p2 == 4{
+        //si les dé sont egale a 1 le coffre apparait
+        if coffre  == 1 {
+            
+            armeRandomFr(character: c1P1)
+        }
+        combatFr(character: c1P1, character2: c1P2)
+        
+    }
+    //si le joueur 1 choisi son 1er personnage et choisis d'attaquer le 2eme personnage du joueur 2
+    if p1 == 1 && p2 == 5{
+        
+        if coffre  == 1 {
+            
+            armeRandomFr(character: c1P1)
+        }
+        combatFr(character: c1P1, character2: c2P2)
+    }
+    //si le joueur 1 choisi son 1er personnage et choisis d'attaquer le 3eme personnage du joueur 2
+    if p1 == 1 && p2 == 6{
+        
+        if coffre  == 1 {
+            
+            armeRandomFr(character: c1P1)
+        }
+        combatFr(character: c1P1, character2: c3P2)
+    }
+    //si le joueur 1 choisi son 2eme personnage et choisis d'attaquer le 1er personnage du joueur 2
+    if p1 == 2 && p2 == 4{
+        
+        if coffre  == 1 {
+            
+            armeRandomFr(character: c2P1)
+        }
+        combatFr(character: c2P1, character2: c1P2)
+    }
+    //si le joueur 1 choisi son 2eme personnage et choisis d'attaquer le 2eme personnage du joueur 2
+    if p1 == 2 && p2 == 5{
+        
+        if coffre  == 1 {
+            
+            armeRandomFr(character: c2P1)
+        }
+        combatFr(character: c2P1, character2: c2P2)
+    }
+    //si le joueur 1 choisi son 2eme personnage et choisis d'attaquer le 3eme personnage du joueur 2
+    if p1 == 2 && p2 == 6{
+        
+        if coffre  == 1 {
+            
+            armeRandomFr(character: c2P1)
+        }
+        combatFr(character: c2P1, character2: c3P2)
+    }
+    //si le joueur 1 choisi son 3eme personnage et choisis d'attaquer le 1er personnage du joueur 2
+    if p1 == 3 && p2 == 4{
+        
+        if coffre  == 1 {
+            
+            armeRandomFr(character: c3P1)
+        }
+        combatFr(character: c3P1, character2: c1P2)
+    }
+    //si le joueur 1 choisi son 3eme personnage et choisis d'attaquer le 2eme personnage du joueur 2
+    if p1 == 3 && p2 == 5{
+        
+        if coffre  == 1 {
+            
+            armeRandomFr(character: c3P1)
+        }
+        combatFr(character: c3P1, character2: c2P2)
+    }
+    
+    //si le joueur 1 choisi son 3eme personnage et choisis d'attaquer le 3eme personnage du joueur 2
+    if p1 == 3 && p2 == 6{
+        
+        if coffre  == 1 {
+            
+            armeRandomFr(character: c3P1)
+        }
+        combatFr(character: c3P1, character2: c3P2)
+    }
+    
+}
+func menuAttackOrdiEn(c1P1:Character, c2P1: Character, c3P1: Character, c1P2:Character, c2P2: Character, c3P2: Character) {
+    
+    var p1 : Int = 0
+    var p2 : Int = 0
+    var nombreDeMort = 0
+    var nombreDeMortOrdi = 0
+    var numberOrdi = Int.random(in: 1..<4)
+    
+    // choix du personnage qui attaque
+    func choice(){
+        print("\nWitch Charactere do you want ?  :")
+        if c1P1.isALive == false {
+            print("1.  \(c1P1.name!) (KO)")
+                nombreDeMort += 1
+        }else{
+            print("1.  \(c1P1.name!) (\(c1P1.lifePoint) PV) ")
+        }
+        if c2P1.isALive == false {
+            print("2.  \(c2P1.name!) (KO)")
+            nombreDeMort += 2
+        }else{
+            print("2.  \(c2P1.name!) ( \(c2P1.lifePoint) PV) ")
+        }
+        if c3P1.isALive == false {
+            print("3.  \(c3P1.name!) (KO)")
+            nombreDeMort += 3
+        }else{
+            print("3.  \(c3P1.name!) (\(c3P1.lifePoint) PV)")
+        }
+    }
+    
+    choice()
+    
+    
+    //choix si aucun joueur n'est KO
+    switch nombreDeMort {
+        case 1:
+            numberOrdi = Int.random(in: 2..<4)
+            switch numberOrdi {
+                case 2:
+                    p1 = 2
+                case 3:
+                    p1 = 3
+                default:
+                    p1 = 2
+            }
+        case 2:
+            numberOrdi = Int.random(in: 2..<4)
+            switch numberOrdi {
+                case 2:
+                    p1 = 1
+                case 3:
+                    p1 = 3
+                default:
+                    p1 = 1
+            }
+        case 3:
+          p1 = 3
+        case 4:
+            p1 = 2
+        case 5:
+            p1 = 1
+        default:
+            numberOrdi = Int.random(in: 1..<4)
+            switch numberOrdi {
+                case 1:
+                    p1 = 1
+                case 2:
+                    p1 = 2
+                case 3:
+                    p1 = 3
+                default:
+                    p1 = 1
+    }
+    }
+ 
+    
+    // choix du personnage qui sera attaquer
+    func choiceAttack(){
+        print("\n Choose the character you want to attack?")
+        if c1P2.isALive == false {
+            print("1.  \(c1P2.name!) (KO)")//affiche KO lors celui-ci n'a plus de point de vie
+            nombreDeMortOrdi += 1
+        }else{
+            print("1.  \(c1P2.name!)(\(c1P2.lifePoint) PV)")
+        }
+        if c2P2.isALive == false {
+            print("2.  \(c2P2.name!) (KO)")//affiche KO lors celui-ci n'a plus de point de vie
+            nombreDeMortOrdi += 2
+        }else{
+            print("2.  \(c2P2.name!) (\(c2P2.lifePoint) PV)")
+        }
+        if c3P2.isALive == false {
+            print("3.  \(c3P2.name!) (KO)")//affiche KO lors celui-ci n'a plus de point de vie
+            nombreDeMortOrdi += 3
+        }else{
+            print("3.  \(c3P2.name!) ( \(c3P2.lifePoint) PV) ")
+        }
+    }
+    
+    choiceAttack()
+    
+    
+
+    
+            switch nombreDeMortOrdi {
+                case 1:
+                    numberOrdi = Int.random(in: 2..<4)
+                    switch numberOrdi {
+                        case 2:
+                            p2 = 5
+                        case 3:
+                            p2 = 6
+                        default:
+                            p2 = 5
+                    }
+                case 2:
+                    numberOrdi = Int.random(in: 2..<4)
+                    switch numberOrdi {
+                        case 2:
+                            p2 = 4
+                        case 3:
+                            p2 = 6
+                        default:
+                            p2 = 4
+                    }
+                case 3:
+                    p2 = 6
+                case 4:
+                    p2 = 5
+                case 5:
+                    p2 = 4
+                default:
+                    numberOrdi = Int.random(in: 1..<4)
+                    switch numberOrdi {
+                        case 1:
+                            p2 = 4
+                        case 2:
+                            p2 = 5
+                        case 3:
+                            p2 = 6
+                        default:
+                            p2 = 4
+                    }
+    
+            }
+            
+    // jette les dé enter 1 est 10
+    let coffre = Int.random(in: 1..<10)
+    
+    //si le joueur 1 choisi son 1er personnage et choisis d'attaquer le 1er personnage du joueur 2
+    if p1 == 1 && p2 == 4{
+        //si les dé sont egale a 1 le coffre apparait
+        if coffre  == 1 {
+            
+            armeRandomEn(character: c1P1)
+        }
+        combatEn(character: c1P1, character2: c1P2)
+        
+    }
+    //si le joueur 1 choisi son 1er personnage et choisis d'attaquer le 2eme personnage du joueur 2
+    if p1 == 1 && p2 == 5{
+        
+        if coffre  == 1 {
+            
+            armeRandomEn(character: c1P1)
+        }
+        combatEn(character: c1P1, character2: c2P2)
+    }
+    //si le joueur 1 choisi son 1er personnage et choisis d'attaquer le 3eme personnage du joueur 2
+    if p1 == 1 && p2 == 6{
+        
+        if coffre  == 1 {
+            
+            armeRandomEn(character: c1P1)
+        }
+        combatEn(character: c1P1, character2: c3P2)
+    }
+    //si le joueur 1 choisi son 2eme personnage et choisis d'attaquer le 1er personnage du joueur 2
+    if p1 == 2 && p2 == 4{
+        
+        if coffre  == 1 {
+            
+            armeRandomEn(character: c2P1)
+        }
+        combatEn(character: c2P1, character2: c1P2)
+    }
+    //si le joueur 1 choisi son 2eme personnage et choisis d'attaquer le 2eme personnage du joueur 2
+    if p1 == 2 && p2 == 5{
+        
+        if coffre  == 1 {
+            
+            armeRandomEn(character: c2P1)
+        }
+        combatEn(character: c2P1, character2: c2P2)
+    }
+    //si le joueur 1 choisi son 2eme personnage et choisis d'attaquer le 3eme personnage du joueur 2
+    if p1 == 2 && p2 == 6{
+        
+        if coffre  == 1 {
+            
+            armeRandomEn(character: c2P1)
+        }
+        combatEn(character: c2P1, character2: c3P2)
+    }
+    //si le joueur 1 choisi son 3eme personnage et choisis d'attaquer le 1er personnage du joueur 2
+    if p1 == 3 && p2 == 4{
+        
+        if coffre  == 1 {
+            
+            armeRandomEn(character: c3P1)
+        }
+        combatEn(character: c3P1, character2: c1P2)
+    }
+    //si le joueur 1 choisi son 3eme personnage et choisis d'attaquer le 2eme personnage du joueur 2
+    if p1 == 3 && p2 == 5{
+        
+        if coffre  == 1 {
+            
+            armeRandomEn(character: c3P1)
+        }
+        combatEn(character: c3P1, character2: c2P2)
+    }
+    
+    //si le joueur 1 choisi son 3eme personnage et choisis d'attaquer le 3eme personnage du joueur 2
+    if p1 == 3 && p2 == 6{
+        
+        if coffre  == 1 {
+            
+            armeRandomEn(character: c3P1)
+        }
+        combatEn(character: c3P1, character2: c3P2)
+    }
+    
+}
+
 func gamefr() {
     print("\n******************* Regle du Jeu ******************"
         +   "\nVous devez choisir 3 personnages et leur donner un nom"
@@ -941,17 +1595,17 @@ func gamefr() {
             + "******************")
     
     menuPersonageFr(character: player1Chara1)
-    armeChoiseFr(character: player1Chara1)
+    armeChoiceFr(character: player1Chara1)
     menuPersonageFr(character: player1Chara2)
     while player1Chara1.name == player1Chara2.name {
         ChagerdeNomFr(character: player1Chara2)
     }
-    armeChoiseFr(character: player1Chara2)
+    armeChoiceFr(character: player1Chara2)
     menuPersonageFr(character: player1Chara3)
     while (player1Chara1.name == player1Chara3.name) || (player1Chara2.name == player1Chara3.name)  {
         ChagerdeNomFr(character: player1Chara3)
     }
-    armeChoiseFr(character: player1Chara3)
+    armeChoiceFr(character: player1Chara3)
     teamChoice(character1: player1Chara1, character2: player1Chara2, character3: player1Chara3, team: team1)
     
     print("\n******************"
@@ -963,17 +1617,17 @@ func gamefr() {
     while (player2Chara1.name == player1Chara1.name) || (player2Chara1.name == player1Chara2.name) || (player2Chara1.name == player1Chara3.name)  {
         ChagerdeNomFr(character: player2Chara1)
     }
-    armeChoiseFr(character: player2Chara1)
+    armeChoiceFr(character: player2Chara1)
     menuPersonageFr(character: player2Chara2)
     while (player2Chara1.name == player2Chara2.name) || (player2Chara2.name == player1Chara1.name) || (player2Chara2.name == player1Chara2.name) || (player2Chara2.name == player1Chara3.name) {
         ChagerdeNomFr(character: player2Chara2)
     }
-    armeChoiseFr(character: player2Chara2)
+    armeChoiceFr(character: player2Chara2)
     menuPersonageFr(character: player2Chara3)
     while (player2Chara1.name == player2Chara3.name) || (player2Chara2.name == player2Chara3.name) || (player2Chara3.name == player1Chara1.name) || (player2Chara3.name == player1Chara2.name) || (player2Chara3.name == player1Chara3.name) {
         ChagerdeNomFr(character: player2Chara3)
     }
-    armeChoiseFr(character: player2Chara3)
+    armeChoiceFr(character: player2Chara3)
     teamChoice(character1: player2Chara1, character2: player2Chara2, character3: player2Chara3, team: team2)
     
     print   ("\n******************"
@@ -1049,7 +1703,6 @@ func gamefr() {
     }
    
 }
- 
 //Le jeu en anglais
 func gameEn() {
     print("\n******************* Regle du Jeu ******************"
@@ -1062,17 +1715,17 @@ func gameEn() {
             + "\n******************")
     
     menuPersonageEn(character: player1Chara1)
-    armeChoiseEn(character: player1Chara1)
+    armeChoiceEn(character: player1Chara1)
     menuPersonageEn(character: player1Chara2)
     while player1Chara1.name == player1Chara2.name {
         ChagerdeNomEn(character: player1Chara2)
     }
-    armeChoiseEn(character: player1Chara2)
+    armeChoiceEn(character: player1Chara2)
     menuPersonageEn(character: player1Chara3)
     while (player1Chara1.name == player1Chara3.name) || (player1Chara2.name == player1Chara3.name)  {
         ChagerdeNomEn(character: player1Chara3)
     }
-    armeChoiseEn(character: player1Chara3)
+    armeChoiceEn(character: player1Chara3)
     teamChoice(character1: player1Chara1, character2: player1Chara2, character3: player1Chara3, team: team1)
     
     print("\n******************"
@@ -1083,17 +1736,17 @@ func gameEn() {
     while (player2Chara1.name == player1Chara1.name) || (player2Chara1.name == player1Chara2.name) || (player2Chara1.name == player1Chara3.name)  {
         ChagerdeNomEn(character: player2Chara1)
     }
-    armeChoiseEn(character: player2Chara1)
+    armeChoiceEn(character: player2Chara1)
     menuPersonageEn(character: player2Chara2)
     while (player2Chara1.name == player2Chara2.name) || (player2Chara2.name == player1Chara1.name) || (player2Chara2.name == player1Chara2.name) || (player2Chara2.name == player1Chara3.name) {
         ChagerdeNomEn(character: player2Chara2)
     }
-    armeChoiseEn(character: player2Chara2)
+    armeChoiceEn(character: player2Chara2)
     menuPersonageEn(character: player2Chara3)
     while (player2Chara1.name == player2Chara3.name) || (player2Chara2.name == player2Chara3.name) || (player2Chara3.name == player1Chara1.name) || (player2Chara3.name == player1Chara2.name) || (player2Chara3.name == player1Chara3.name) {
         ChagerdeNomEn(character: player2Chara3)
     }
-    armeChoiseEn(character: player2Chara3)
+    armeChoiceEn(character: player2Chara3)
     teamChoice(character1: player2Chara1, character2: player2Chara2, character3: player2Chara3, team: team2)
     
     print   ("\n******************"
@@ -1165,7 +1818,234 @@ func gameEn() {
     }
 }
 
-
+func gameSoloFr(){
+    
+        print("\n******************* Regle du Jeu ******************"
+                +   "\nVous devez choisir 3 personnages et leur donner un nom"
+                + "\nchaque nom doit etre unique, pour chaque personnage"
+                + "\nvous devez lui attribuer une arme ")
+        
+        print("\n******************"
+                + "Le Joeur 1 Choisis "
+                + "******************")
+        
+        menuPersonageFr(character: player1Chara1)
+        armeChoiceFr(character: player1Chara1)
+        menuPersonageFr(character: player1Chara2)
+        while player1Chara1.name == player1Chara2.name {
+            ChagerdeNomFr(character: player1Chara2)
+        }
+        armeChoiceFr(character: player1Chara2)
+        menuPersonageFr(character: player1Chara3)
+        while (player1Chara1.name == player1Chara3.name) || (player1Chara2.name == player1Chara3.name)  {
+            ChagerdeNomFr(character: player1Chara3)
+        }
+        armeChoiceFr(character: player1Chara3)
+        teamChoice(character1: player1Chara1, character2: player1Chara2, character3: player1Chara3, team: team1)
+        
+        print("\n******************"
+                + "L'ordianteur Choisis "
+                + "******************")
+        
+        i = 1 //reinitialisation de i pour afficher le nombre dans le choix des personnages
+        menuOrdinateur(character: ordiChara1)
+        armeChoiceFrAlea(character: ordiChara1)
+    
+    menuOrdinateur(character: ordiChara2)
+        armeChoiceFrAlea(character: ordiChara2)
+    
+    menuOrdinateur(character: ordiChara3)
+        armeChoiceFrAlea(character: ordiChara3)
+    
+        teamChoice(character1: ordiChara1, character2: ordiChara2, character3: ordiChara3, team: team2)
+        
+        print   ("\n******************"
+                    + " La partie peu commencer "
+                    + "******************"
+                    + "\n")
+        
+        // lancement des dés pour Joueur 1 et Joueur 2
+        let numberP1 = Int.random(in: 0..<10)
+        let numberP2 = Int.random(in: 0..<10)
+        
+        //si le nombre du Joeur 1 est plus grand Le joeur 1 commence
+        if numberP1 > numberP2 {
+            
+            while team1.teamPoint != 0 || team2.teamPoint != 0 {
+                if team1.teamPoint == 0 {
+                    print("\nL'equipe 2 a Gagné")
+                    print("Team 2 : \(team2.teamPoint) point et  Team 1 : \(team1.teamPoint)  point en \(tour) tours ")
+                    victoireFr()
+                    break
+                }else{
+                    print("\nLe Joueur 1 commence : ")
+                    menuAttackFr(c1P1: player1Chara1, c2P1: player1Chara2, c3P1: player1Chara3, c1P2: ordiChara1, c2P2: ordiChara2, c3P2: ordiChara3)
+                    //compte du nombre de tour
+                    tour += 1
+                }
+                print("Team 1 : \(team1.teamPoint) Team 2 : \(team2.teamPoint) ")
+                
+                if team2.teamPoint == 0 {
+                    print("\nL'equipe 1 a Gagné")
+                    print("Team 1 : \(team1.teamPoint) point et Team 2 : \(team2.teamPoint) point en \(tour) tours")
+                    victoireFr()
+                    break
+                }else{
+                    print("\nLe L'odrinateur Joue : ")
+                    menuAttackOrdi(c1P1: ordiChara1, c2P1: ordiChara2, c3P1: ordiChara3, c1P2: player1Chara1, c2P2: player1Chara2, c3P2: player1Chara3)
+                    //compte du nombre de tour
+                    tour += 1
+                }
+                
+            }
+            //sinon le joueur 2 commence
+        }else{
+            
+            while team1.teamPoint != 0 || team2.teamPoint != 0 {
+                if team2.teamPoint == 0 {
+                    print("\nL'equipe 1 a Gagné")
+                    print("Team 1 : \(team1.teamPoint) point et Team 2 : \(team2.teamPoint) point en \(tour) tours")
+                    victoireFr()
+                    break
+                }else{
+                    print("\nLe Joueur 2  joue : ")
+                    menuAttackOrdi(c1P1: ordiChara1, c2P1: ordiChara2, c3P1: ordiChara3, c1P2: player1Chara1, c2P2: player1Chara2, c3P2: player1Chara3)
+                    //compte du nombre de tour
+                    tour += 1
+                }
+                
+                
+                
+                if team1.teamPoint == 0 {
+                    print("\nL'ordi a gagné")
+                    print("Team 2 : \(team2.teamPoint) point et  Team 1 : \(team1.teamPoint)  point en \(tour) tours")
+                    victoireFr()
+                    break
+                }else{
+                    print("\nLe Joueur 1 commence : ")
+                    menuAttackFr(c1P1: player1Chara1, c2P1: player1Chara2, c3P1: player1Chara3, c1P2: ordiChara1, c2P2: ordiChara2, c3P2: ordiChara3)
+                    //compte du nombre de tour
+                    tour += 1
+                }
+                
+            }
+        }
+        
+    }
+func gameSoloEn(){
+    
+    print("\n******************* Regle du Jeu ******************"
+            +   "\nYou must choose 3 characters and give them a name"
+            + "\n each name must be unique, for each character"
+            + "\nyou must assign him a weapon")
+    
+    print("\n******************"
+            + "\nPlayer 1 choose"
+            + "\n******************")
+    
+    menuPersonageEn(character: player1Chara1)
+    armeChoiceEn(character: player1Chara1)
+    menuPersonageEn(character: player1Chara2)
+    while player1Chara1.name == player1Chara2.name {
+        ChagerdeNomEn(character: player1Chara2)
+    }
+    armeChoiceEn(character: player1Chara2)
+    menuPersonageEn(character: player1Chara3)
+    while (player1Chara1.name == player1Chara3.name) || (player1Chara2.name == player1Chara3.name)  {
+        ChagerdeNomEn(character: player1Chara3)
+    }
+    armeChoiceEn(character: player1Chara3)
+    teamChoice(character1: player1Chara1, character2: player1Chara2, character3: player1Chara3, team: team1)
+    
+    print("\n******************"
+            + "\nPlayer 2 choose"
+            + "\n******************")
+    
+    i = 1 //reinitialisation de i pour afficher le nombre dans le choix des personnages
+    menuOrdinateurEn(character: ordiChara1)
+    armeChoiceEnAlea(character: ordiChara1)
+    
+    menuOrdinateurEn(character: ordiChara2)
+    armeChoiceEnAlea(character: ordiChara2)
+    
+    menuOrdinateurEn(character: ordiChara3)
+    armeChoiceEnAlea(character: ordiChara3)
+    
+    teamChoice(character1: ordiChara1, character2: ordiChara2, character3: ordiChara3, team: team2)
+    
+    print   ("\n******************"
+                + "\n Game Start"
+                + "\n******************"
+                + "\n")
+    
+    // lancement des dés pour Joueur 1 et Joueur 2
+    let numberP1 = Int.random(in: 0..<10)
+    let numberP2 = Int.random(in: 0..<10)
+    
+    //si le nombre du Joeur 1 est plus grand Le joeur 1 commence
+    if numberP1 > numberP2 {
+        
+        while team1.teamPoint != 0 || team2.teamPoint != 0 {
+            if team1.teamPoint == 0 {
+                print("Computer Win")
+                print("Team 2 : \(team2.teamPoint) point and Team 1 : \(team1.teamPoint)  point in \(tour) rounds")
+                victoireEn()
+                break
+            }else{
+                print("\nPlayer 1 play : ")
+                menuAttackEn(c1P1: player1Chara1, c2P1: player1Chara2, c3P1: player1Chara3, c1P2: ordiChara1, c2P2: ordiChara2, c3P2: ordiChara3)
+                //compte du nombre de tour
+                tour += 1
+            }
+            print("Team 1 : \(team1.teamPoint) Team 2 : \(team2.teamPoint) ")
+            
+            if team2.teamPoint == 0 {
+                print("Team 1 win")
+                print("Team 1 : \(team1.teamPoint) point and Team 2 : \(team2.teamPoint) point in  \(tour) rounds")
+                victoireEn()
+                break
+            }else{
+                print("\nPlayer 2  play : ")
+                menuAttackOrdiEn(c1P1: ordiChara1, c2P1: ordiChara2, c3P1: ordiChara3, c1P2: player1Chara1, c2P2: player1Chara2, c3P2: player1Chara3)
+                //compte du nombre de tour
+                tour += 1
+            }
+            
+        }
+        //sinon le joueur 2 commence
+    }else{
+        
+        while team1.teamPoint != 0 || team2.teamPoint != 0 {
+            if team2.teamPoint == 0 {
+                print("\nTeam 1 win")
+                print("Team 1 : \(team1.teamPoint) point and Team 2 : \(team2.teamPoint) point in \(tour) rounds")
+                victoireEn()
+                break
+            }else{
+                print("\nLe Joueur 2  joue : ")
+                menuAttackOrdiEn(c1P1: ordiChara1, c2P1: ordiChara2, c3P1: ordiChara3, c1P2: player1Chara1, c2P2: player1Chara2, c3P2: player1Chara3)
+                //compte du nombre de tour
+                tour += 1
+            }
+            
+            
+            
+            if team1.teamPoint == 0 {
+                print("\nComputer win")
+                print("Team 2 : \(team2.teamPoint) point and  Team 1 : \(team1.teamPoint)  point in \(tour) rounds")
+                victoireEn()
+                break
+            }else{
+                print("\nPlayer 1 start: ")
+                menuAttackEn(c1P1: player1Chara1, c2P1: player1Chara2, c3P1: player1Chara3, c1P2: ordiChara1, c2P2: ordiChara2, c3P2: ordiChara3)
+                //compte du nombre de tour
+                tour += 1
+            }
+            
+        }
+    }
+    
+}
 
 //Menu qui permert de choisir la langue
 func game(){
@@ -1174,9 +2054,9 @@ func game(){
         
         while gameIsOn == true {
             if langue == "1" {
-                gamefr()
+               nbjoueurFr()
             }else if langue == "2"{
-                gameEn()
+                nbjoueurEn()
             }else{
                 print("Merci de selctionner parmis les 2 propositions")
                 print("Please select between the 2 proposals")
