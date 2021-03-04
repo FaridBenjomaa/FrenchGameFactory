@@ -11,4 +11,12 @@ class Party{
     
     var langue = "Fr"
     var nbPlayer = 1
+    
+    init(){
+        self.langue = "Fr"
+        self.nbPlayer = 1
+    }
 }
+
+
+
