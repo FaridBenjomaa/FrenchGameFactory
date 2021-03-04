@@ -207,25 +207,27 @@ class Character {
     func heal(character2: Character, team: Team){
         character2.lifePoint += healPoint
         team.teamPoint += healPoint
-        print("\(name!) utilise une potion sur \(character2) qui soigne de \(healPoint) point de vie")
+        if game.party.langue == "Fr"{
+            print("\(name!) utilise une potion sur \(character2.name!) qui soigne de \(healPoint) point de vie")
+        }else{
+            print("\(name!) Use a potion on \(character2.name!) and heal  \(healPoint)  life point")
+        }
+        
         if character2.lifePoint >= 100 {
             character2.lifePoint = 100
         }
-        print("Les point de vie de \(character2) sont maintenant de \(character2.lifePoint) point de vie")
+        if game.party.langue == "Fr"{
+            print("Les point de vie de \(character2.name!) sont maintenant de \(character2.lifePoint) point de vie")
+        }else{
+            print("\(character2.name!)'s life point are now \(character2.lifePoint) life point")
+        }
+        
         if team.teamPoint >= 300  {
             team.teamPoint = 300
         }
         
         
-        if game.party.langue == "Fr"{
-            print("\n\(name!) soigne \(character2.name!) "
-                    + "\n \(character2.name!) obtient \(weapon.healPoint) point de vie"
-                    + "\n il reste \(character2.lifePoint) point de vie à \(character2.name!)")
-        }else{
-            print("\n\(name!) attack \(character2.name!) "
-                    + "\n \(character2.name!) gain \(weapon.attackPoint) healt point"
-                    + "\n there are \(character2.lifePoint) life point left to  \(character2.name!)")
-        }
+        
         
         
         
